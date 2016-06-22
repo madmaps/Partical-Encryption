@@ -17,6 +17,7 @@ private:
 	std::string password;
 	std::string randomBits;
 	int volume;
+	int rows;
 	int blocks;
 	std::vector<Particals*> m_particals;
 	
