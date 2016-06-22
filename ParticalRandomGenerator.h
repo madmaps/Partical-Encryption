@@ -26,5 +26,10 @@ private:
 	int getXSpeed(const char inChar)const;
 	int getYSpeed(const char inChar)const;
 	int getSize(const char inChar)const;
+	double calculateXForce(const unsigned int& current) const;
+	double calculateYForce(const unsigned int& current) const;
+
+	
+	
 };
 #endif	

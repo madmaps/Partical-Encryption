@@ -34,7 +34,10 @@ ParticalRandomGenerator::ParticalRandomGenerator(std::string inPassword,std::str
 	int restOf = blocks-(randomBits.length()+password.length());
 	for(int i = blocks-restOf;i<blocks;i++)
 	{
-		//Create Generic Particles Here
+		addY = floor(i/rows)*16;
+		addX = (i%rows)*16;
+		tempPartical = new Particals(addX+8,addY+8,0,0,1);
+		m_particals.push_back(tempPartical);
 	}
 }
 
@@ -71,6 +74,32 @@ int ParticalRandomGenerator::getYSpeed(const char inChar)const
 int ParticalRandomGenerator::getSize(const char inChar)const
 {
 	return (inChar%10)*5;
+}
+
+double ParticalRandomGenerator::calculateXForce(const unsigned int& current) const
+{
+    double returnForce = 0;
+    for(unsigned int i=0;i<m_particals.size();i++)
+    {
+        if(i!=current)
+        {
+            returnForce += m_particals.at(current)->calculateXForce(*m_particals.at(i));
+        }
+    }
+    return returnForce;
+}
+
+double ParticalRandomGenerator::calculateYForce(const unsigned int& current) const
+{
+    double returnForce = 0;
+    for(unsigned int i=0;i<m_particals.size();i++)
+    {
+        if(i!=current)
+        {
+            returnForce += m_particals.at(current)->calculateYForce(*m_particals.at(i));
+        }
+    }
+    return returnForce;
 }
 
 
