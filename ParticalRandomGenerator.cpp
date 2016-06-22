@@ -5,22 +5,28 @@ ParticalRandomGenerator::ParticalRandomGenerator(std::string inPassword,std::str
 {
 	password = inPassword;
 	randomBits = inRandomBits;
+	rows = ceil(sqrt(inPassword.length()+inRandomBits.length()));
 	blocks = pow(ceil(sqrt(inPassword.length()+inRandomBits.length())),2);
 	volume = ceil(sqrt(inPassword.length()+inRandomBits.length()))*16;
 	Particals::setVolume(volume);
 	unsigned int passwordCount=0,randomBitCount=0;
 	Particals* tempPartical ;
+	int addX=0, addY=0;
 	for(int i = 0;i < blocks;i++)
 	{
 		if(passwordCount<=password.length())
 		{
-			tempPartical = new Particals(getX(password.at(passwordCount)),getY(password.at(passwordCount)),getXSpeed(password.at(passwordCount)),getYSpeed(password.at(passwordCount)),getSize(password.at(passwordCount)));
+			addY = floor(i/rows)*16;
+			addX = (i%rows)*16;
+			tempPartical = new Particals(getX(password.at(passwordCount))+addX,getY(password.at(passwordCount))+addY,getXSpeed(password.at(passwordCount)),getYSpeed(password.at(passwordCount)),getSize(password.at(passwordCount)));
 			m_particals.push_back(tempPartical);
 			passwordCount++;
 		}
 		if(randomBitCount<=randomBits.length())
 		{
-			tempPartical = new Particals(getX(randomBits.at(randomBitCount)),getY(randomBits.at(randomBitCount)),getXSpeed(randomBits.at(randomBitCount)),getYSpeed(randomBits.at(randomBitCount)),getSize(randomBits.at(randomBitCount)));
+			addY = floor(i/rows)*16;
+			addX = (i%rows)*16;
+			tempPartical = new Particals(getX(randomBits.at(randomBitCount))+addX,getY(randomBits.at(randomBitCount))+addY,getXSpeed(randomBits.at(randomBitCount)),getYSpeed(randomBits.at(randomBitCount)),getSize(randomBits.at(randomBitCount)));
 			m_particals.push_back(tempPartical);
 			randomBitCount++;
 		}
