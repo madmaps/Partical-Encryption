@@ -67,21 +67,21 @@ void Particals::updateLocation()
     locationX+=speedX;
 	locationY+=speedY;
 
-    if(locationX>dblVolume/2)
+    if(locationX>dblVolume)
     {
         speedX=-speedX;
     }
-    if(locationX<-dblVolume/2)
+    if(locationX<0)
     {
         speedX=-speedX;
     }
 
 
-    if(locationY>dblVolume/2)
+    if(locationY>dblVolume)
     {
         speedY=-speedY;
     }
-    if(locationY<-dblVolume/2)
+    if(locationY<0)
     {
         speedY=-speedY;
     }
