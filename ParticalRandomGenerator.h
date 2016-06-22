@@ -18,9 +18,11 @@ private:
 	std::string randomBits;
 	int volume;
 	int rows;
-	int blocks;
+	unsigned int blocks;
 	std::vector<Particals*> m_particals;
+	unsigned int blockCountdown;
 	
+	void updateParticals(const unsigned int inFrames);
 	int getX(const char inChar)const;
 	int getY(const char inChar)const;
 	int getXSpeed(const char inChar)const;
