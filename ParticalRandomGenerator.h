@@ -8,7 +8,7 @@ class ParticalRandomGenerator
 {
 public:
 	ParticalRandomGenerator(std::string inPassword,std::string inRandomBits);
-	char getRandomChar();
+	double getRandomChar();
 	
 	~ParticalRandomGenerator();
 

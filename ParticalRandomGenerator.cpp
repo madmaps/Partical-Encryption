@@ -1,20 +1,24 @@
 #include "ParticalRandomGenerator.h"
 #include <math.h>
+#include <iostream>
 
 ParticalRandomGenerator::ParticalRandomGenerator(std::string inPassword,std::string inRandomBits)
 {
 	password = inPassword;
 	randomBits = inRandomBits;
-	rows = ceil(sqrt(inPassword.length()+inRandomBits.length()));
-	blocks = pow(ceil(sqrt(inPassword.length()+inRandomBits.length())),2);
-	volume = ceil(sqrt(inPassword.length()+inRandomBits.length()))*16;
+	unsigned int totalLength  = (inPassword.length())+(inRandomBits.length());
+	rows = ceil(sqrt(totalLength));
+	blocks = pow(ceil(sqrt(totalLength)),2);
+	volume = ceil(sqrt(totalLength))*16;
+	std::cout << "Total Length: " << totalLength << std::endl;
+	std::cout << "Rows: " << rows << " Blocks: " << blocks << " Volume: " << volume << std::endl;
 	Particals::setVolume(volume);
 	unsigned int passwordCount=0,randomBitCount=0;
 	Particals* tempPartical ;
 	int addX=0, addY=0;
 	for(unsigned int i = 0;i < blocks;i++)
 	{
-		if(passwordCount<=password.length())
+		if(passwordCount<password.length())
 		{
 			addY = floor(i/rows)*16;
 			addX = (i%rows)*16;
@@ -22,7 +26,7 @@ ParticalRandomGenerator::ParticalRandomGenerator(std::string inPassword,std::str
 			m_particals.push_back(tempPartical);
 			passwordCount++;
 		}
-		if(randomBitCount<=randomBits.length())
+		if(randomBitCount<randomBits.length())
 		{
 			addY = floor(i/rows)*16;
 			addX = (i%rows)*16;
@@ -42,16 +46,19 @@ ParticalRandomGenerator::ParticalRandomGenerator(std::string inPassword,std::str
 	updateParticals(200);
 }
 
-char ParticalRandomGenerator::getRandomChar()
+double ParticalRandomGenerator::getRandomChar()
 {
-	char returnChar;
+	double  returnChar;
+	int index =(blockCountdown/2)-1;
+	//std::cout << "Index: " << index << std::endl;
 	if(blockCountdown>blocks)
 	{
-		returnChar = (char)m_particals.at(blockCountdown/2)->getX();
+		std::cout << blockCountdown-blocks-1;
+		returnChar = m_particals.at(blockCountdown-blocks-1)->getX();
 	}
 	else
 	{
-		returnChar = (char)m_particals.at(blockCountdown/2)->getY();
+		returnChar =m_particals.at(blockCountdown-1)->getY();
 	}
 	blockCountdown--;
 	if(blockCountdown<=0)
