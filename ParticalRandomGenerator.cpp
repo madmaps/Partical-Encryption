@@ -43,7 +43,7 @@ ParticalRandomGenerator::ParticalRandomGenerator(std::string inPassword,std::str
 		tempPartical = new Particals(addX+8,addY+8,0,0,1);
 		m_particals.push_back(tempPartical);
 	}
-	updateParticals(200);
+	updateParticals(1);
 }
 
 double ParticalRandomGenerator::getRandomChar()
@@ -53,7 +53,7 @@ double ParticalRandomGenerator::getRandomChar()
 	//std::cout << "Index: " << index << std::endl;
 	if(blockCountdown>blocks)
 	{
-		std::cout << blockCountdown-blocks-1;
+		//std::cout << blockCountdown-blocks-1;
 		returnChar = m_particals.at(blockCountdown-blocks-1)->getX();
 	}
 	else
@@ -84,17 +84,20 @@ int ParticalRandomGenerator::getY(const char inChar)const
 
 int ParticalRandomGenerator::getXSpeed(const char inChar)const
 {
-	return ((int)inChar%16)-8;
+	return 0;
+	//return ((int)inChar%16)-8;
 }
 
 int ParticalRandomGenerator::getYSpeed(const char inChar)const
 {
-	return (((int)inChar+5)%16)-8;
+	return 0;
+	//return (((int)inChar+5)%16)-8;
 }
 
 int ParticalRandomGenerator::getSize(const char inChar)const
 {
-	return (inChar%10)*5;
+	return 1;
+	//return (inChar%10)*5;
 }
 
 double ParticalRandomGenerator::calculateXForce(const unsigned int& current) const
