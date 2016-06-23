@@ -1,7 +1,7 @@
 #include "particals.h"
 #include <math.h>
 
-double Particals::gravityForce = 10;
+double Particals::gravityForce = 1;
 double Particals::massDiameterRatio = 1;
 int Particals::volume = 100;
 
@@ -67,21 +67,21 @@ void Particals::updateLocation()
     locationX+=speedX;
 	locationY+=speedY;
 
-    if(locationX>dblVolume)
+    if(locationX>dblVolume && speedX>0)
     {
         speedX=-speedX;
     }
-    if(locationX<0)
+    if(locationX<0 && speedX<0)
     {
         speedX=-speedX;
     }
 
 
-    if(locationY>dblVolume)
+    if(locationY>dblVolume && speedY>0)
     {
         speedY=-speedY;
     }
-    if(locationY<0)
+    if(locationY<0 && speedY<0)
     {
         speedY=-speedY;
     }
@@ -90,25 +90,25 @@ void Particals::updateLocation()
 double Particals::calculateXForce(const Particals &inPartical) const
 {
     double distance = sqrt(pow(inPartical.locationX-locationX,2)+pow(inPartical.locationY-locationY,2));
-    //if(distance>fabs(diameter/2+inPartical.diameter/2))
-    //{
+    if(distance>fabs(diameter/2+inPartical.diameter/2))
+    {
 		double force = (gravityForce*mass*inPartical.mass)/pow(distance,2);
 		double xForce = (force/distance)*(inPartical.locationX-locationX);//sqrt(pow(distance,2)-pow(inPartical.locationY-locationY,2));
 		return xForce;
-	//}
-	//return 0;
+	}
+	return 0;
 }
 
 double Particals::calculateYForce(const Particals &inPartical) const
 {
     double distance = sqrt(pow(inPartical.locationX-locationX,2)+pow(inPartical.locationY-locationY,2));
-	//if(distance>fabs(diameter/2+inPartical.diameter/2))
-    //{
+	if(distance>fabs(diameter/2+inPartical.diameter/2))
+    {
 		double force = (gravityForce*mass*inPartical.mass)/pow(distance,2);
 		double yForce = (force/distance)*(inPartical.locationY-locationY);//sqrt(pow(force,2)-pow(inPartical.locationX-locationX,2));
 		return yForce;
-	//}
-	//return 0;
+	}
+	return 0;
 }
 
 double Particals::getX()const
