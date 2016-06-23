@@ -38,9 +38,9 @@ ParticalRandomGenerator::ParticalRandomGenerator(std::string inPassword,std::str
 	int restOf = blocks-(randomBits.length()+password.length());
 	for(unsigned int i = blocks-restOf;i<blocks;i++)
 	{
-		addY = floor(i/rows)*100;
+		addY = floor(i/rows)*160;
 		addX = (i%rows)*160;
-		tempPartical = new Particals(0,0,0,0,1);
+		tempPartical = new Particals(addX,addY,0,0,1);
 		m_particals.push_back(tempPartical);
 	}
 	updateParticals(200);

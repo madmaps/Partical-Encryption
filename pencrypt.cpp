@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-	ParticalRandomGenerator randGen("password","yummytrf");
+	ParticalRandomGenerator randGen("password","yummy");
 	for(int i = 0; i<=32;i++)
 	{
 		cout << randGen.getRandomChar() << endl;
