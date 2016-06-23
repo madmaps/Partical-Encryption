@@ -9,40 +9,53 @@ ParticalRandomGenerator::ParticalRandomGenerator(std::string inPassword,std::str
 	unsigned int totalLength  = (inPassword.length())+(inRandomBits.length());
 	rows = ceil(sqrt(totalLength));
 	blocks = pow(ceil(sqrt(totalLength)),2);
-	volume = ceil(sqrt(totalLength))*16;
+	volume = rows*160;
 	Particals::setVolume(volume);
 	unsigned int passwordCount=0,randomBitCount=0;
 	Particals* tempPartical ;
 	int addX=0, addY=0;
-	for(unsigned int i = 0;i < blocks;i++)
+	for(unsigned int i = 0;i<=totalLength-1;)
 	{
 		if(passwordCount<=password.length()-1)
 		{
-			addY = floor(i/rows)*16;
-			addX = (i%rows)*16;
+			addY = floor(i/rows)*160;
+			addX = (i%rows)*160;
 			std::cout << "Add(X,Y): (" << addX << "," << addY << ")" << std::endl;
 			tempPartical = new Particals(getX(password.at(passwordCount))+addX,getY(password.at(passwordCount))+addY,getXSpeed(password.at(passwordCount)),getYSpeed(password.at(passwordCount)),getSize(password.at(passwordCount)));
 			m_particals.push_back(tempPartical);
 			passwordCount++;
+			i++;
 		}
 		if(randomBitCount<=randomBits.length()-1)
 		{
-			addY = floor(i/rows)*16;
-			addX = (i%rows)*16;
+			addY = floor(i/rows)*160;
+			addX = (i%rows)*160;
+						std::cout << "Add(X,Y): (" << addX << "," << addY << ")" << std::endl;
+
 			tempPartical = new Particals(getX(randomBits.at(randomBitCount))+addX,getY(randomBits.at(randomBitCount))+addY,getXSpeed(randomBits.at(randomBitCount)),getYSpeed(randomBits.at(randomBitCount)),getSize(randomBits.at(randomBitCount)));
 			m_particals.push_back(tempPartical);
 			randomBitCount++;
+			i++;
 		}
 	}
 	int restOf = blocks-(randomBits.length()+password.length());
 	for(unsigned int i = blocks-restOf;i<blocks;i++)
 	{
-		addY = floor(i/rows)*16;
-		addX = (i%rows)*16;
-		tempPartical = new Particals(0,0,0,0,1);
+		addY = floor(i/rows)*100;
+		addX = (i%rows)*160;
+		tempPartical = new Particals(0,0,0,0,10);
 		m_particals.push_back(tempPartical);
 	}
-	updateParticals(0);
+	for(int i=0;i<m_particals.size();i++)
+	{
+		std::cout << "Partical[" << i << "]: (" << m_particals.at(i)->getX() << "," << m_particals.at(i)->getY() << ")" << std::endl;
+	}
+	updateParticals(200);
+	for(int i=0;i<m_particals.size();i++)
+	{
+		std::cout << "Partical[" << i << "]: (" << m_particals.at(i)->getX() << "," << m_particals.at(i)->getY() << ")" << std::endl;
+	}
+
 }
 
 double ParticalRandomGenerator::getRandomChar()
@@ -54,12 +67,12 @@ double ParticalRandomGenerator::getRandomChar()
 	}
 	else
 	{
-		returnChar =m_particals.at(blockCountdown-1)->getY();
+		returnChar = m_particals.at(blockCountdown-1)->getY();
 	}
 	blockCountdown--;
 	if(blockCountdown<=0)
 	{
-		updateParticals(0);
+		updateParticals(200);
 	}
 	return returnChar;
 }
@@ -70,12 +83,12 @@ ParticalRandomGenerator::~ParticalRandomGenerator()
 
 int ParticalRandomGenerator::getX(const char inChar)const
 {
-	return (int)inChar%16;
+	return 10*((int)inChar%16);
 }
 
 int ParticalRandomGenerator::getY(const char inChar)const
 {
-	return floor((int)inChar/16);
+	return 10*floor((int)inChar/16);
 }
 
 int ParticalRandomGenerator::getXSpeed(const char inChar)const

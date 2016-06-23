@@ -1,7 +1,7 @@
 #include "particals.h"
 #include <math.h>
 
-double Particals::gravityForce = 100;
+double Particals::gravityForce = 10;
 double Particals::massDiameterRatio = 1;
 int Particals::volume = 100;
 
@@ -90,25 +90,25 @@ void Particals::updateLocation()
 double Particals::calculateXForce(const Particals &inPartical) const
 {
     double distance = sqrt(pow(inPartical.locationX-locationX,2)+pow(inPartical.locationY-locationY,2));
-    if(distance>fabs(diameter/2+inPartical.diameter/2))
-    {
+    //if(distance>fabs(diameter/2+inPartical.diameter/2))
+    //{
 		double force = (gravityForce*mass*inPartical.mass)/pow(distance,2);
 		double xForce = (force/distance)*(inPartical.locationX-locationX);//sqrt(pow(distance,2)-pow(inPartical.locationY-locationY,2));
 		return xForce;
-	}
-	return 0;
+	//}
+	//return 0;
 }
 
 double Particals::calculateYForce(const Particals &inPartical) const
 {
     double distance = sqrt(pow(inPartical.locationX-locationX,2)+pow(inPartical.locationY-locationY,2));
-	if(distance>fabs(diameter/2+inPartical.diameter/2))
-    {
+	//if(distance>fabs(diameter/2+inPartical.diameter/2))
+    //{
 		double force = (gravityForce*mass*inPartical.mass)/pow(distance,2);
 		double yForce = (force/distance)*(inPartical.locationY-locationY);//sqrt(pow(force,2)-pow(inPartical.locationX-locationX,2));
 		return yForce;
-	}
-	return 0;
+	//}
+	//return 0;
 }
 
 double Particals::getX()const
