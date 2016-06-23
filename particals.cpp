@@ -1,7 +1,7 @@
 #include "particals.h"
 #include <math.h>
 
-double Particals::gravityForce = 10;
+double Particals::gravityForce = 100;
 double Particals::massDiameterRatio = 1;
 int Particals::volume = 100;
 
