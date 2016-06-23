@@ -91,7 +91,7 @@ int ParticalRandomGenerator::getYSpeed(const char inChar)const
 
 int ParticalRandomGenerator::getSize(const char inChar)const
 {
-	return (inChar%10)*1;
+	return 1;//(inChar%3)*1;
 }
 
 double ParticalRandomGenerator::calculateXForce(const unsigned int& current) const
