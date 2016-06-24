@@ -9,7 +9,7 @@ ParticalRandomGenerator::ParticalRandomGenerator(std::string inPassword,std::str
 	unsigned int totalLength  = (inPassword.length())+(inRandomBits.length());
 	rows = ceil(sqrt(totalLength));
 	blocks = pow(ceil(sqrt(totalLength)),2);
-	volume = rows*160;
+	volume = rows*volMulti;
 	Particals::setVolume(volume);
 	unsigned int passwordCount=0,randomBitCount=0;
 	Particals* tempPartical ;
@@ -18,8 +18,8 @@ ParticalRandomGenerator::ParticalRandomGenerator(std::string inPassword,std::str
 	{
 		if(passwordCount<=password.length()-1)
 		{
-			addY = floor(i/rows)*160;
-			addX = (i%rows)*160;
+			addY = floor(i/rows)*volMulti;
+			addX = (i%rows)*volMulti;
 			tempPartical = new Particals(getX(password.at(passwordCount))+addX,getY(password.at(passwordCount))+addY,getXSpeed(password.at(passwordCount)),getYSpeed(password.at(passwordCount)),getSize(password.at(passwordCount)));
 			m_particals.push_back(tempPartical);
 			passwordCount++;
@@ -27,8 +27,8 @@ ParticalRandomGenerator::ParticalRandomGenerator(std::string inPassword,std::str
 		}
 		if(randomBitCount<=randomBits.length()-1)
 		{
-			addY = floor(i/rows)*160;
-			addX = (i%rows)*160;
+			addY = floor(i/rows)*volMulti;
+			addX = (i%rows)*volMulti;
 			tempPartical = new Particals(getX(randomBits.at(randomBitCount))+addX,getY(randomBits.at(randomBitCount))+addY,getXSpeed(randomBits.at(randomBitCount)),getYSpeed(randomBits.at(randomBitCount)),getSize(randomBits.at(randomBitCount)));
 			m_particals.push_back(tempPartical);
 			randomBitCount++;
@@ -38,8 +38,8 @@ ParticalRandomGenerator::ParticalRandomGenerator(std::string inPassword,std::str
 	int restOf = blocks-(randomBits.length()+password.length());
 	for(unsigned int i = blocks-restOf;i<blocks;i++)
 	{
-		addY = floor(i/rows)*160;
-		addX = (i%rows)*160;
+		addY = floor(i/rows)*volMulti;
+		addX = (i%rows)*volMulti;
 		tempPartical = new Particals(addX,addY,0,0,1);
 		m_particals.push_back(tempPartical);
 	}
@@ -71,12 +71,12 @@ ParticalRandomGenerator::~ParticalRandomGenerator()
 
 int ParticalRandomGenerator::getX(const char inChar)const
 {
-	return 10*((int)inChar%16);
+	return (volMulti/16)*((int)inChar%16);
 }
 
 int ParticalRandomGenerator::getY(const char inChar)const
 {
-	return 10*floor((int)inChar/16);
+	return (volMulti/16)*floor((int)inChar/16);
 }
 
 int ParticalRandomGenerator::getXSpeed(const char inChar)const
