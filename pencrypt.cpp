@@ -1,16 +1,17 @@
 #include <iostream>
 #include "ParticalRandomGenerator.h"
+#include <math.h>
 
 using namespace std;
 
 int main()
 {
-	ParticalRandomGenerator randGen("password","L4Jld2fis4IEls");
-	for(int i = 0; i<=32;i++)
+	ParticalRandomGenerator randGen("pasword","L4Jld2fis4IEls");
+	char temp ;
+	for(int i = 0; i<=1000;i++)
 	{
-		cout << randGen.getRandomChar() << endl;
-		//cout << i << endl;
-		randGen.getRandomChar();
+		temp = randGen.getRandomChar();
+		cout << temp;
 	}
 	return 0;
 }

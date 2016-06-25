@@ -22,7 +22,6 @@ ParticalRandomGenerator::ParticalRandomGenerator(std::string inPassword,std::str
 			addY = floor(i/rows)*volMulti;
 			addX = (i%rows)*volMulti;
 			tempPartical = new Particals(getX(password.at(passwordCount))+addX,getY(password.at(passwordCount))+addY,getXSpeed(password.at(passwordCount)),getYSpeed(password.at(passwordCount)),getSize(password.at(passwordCount)));
-			std::cout << "Password: (" << getX(password.at(passwordCount))+addX << "," << getY(password.at(passwordCount))+addY << ")  Speed:  (" << getXSpeed(password.at(passwordCount)) << "," << getYSpeed(password.at(passwordCount)) << ") Size: " << getSize(password.at(passwordCount)) << std::endl;
 			m_particals.push_back(tempPartical);
 			passwordCount++;
 			i++;
@@ -32,7 +31,6 @@ ParticalRandomGenerator::ParticalRandomGenerator(std::string inPassword,std::str
 			addY = floor(i/rows)*volMulti;
 			addX = (i%rows)*volMulti;
 			tempPartical = new Particals(getX(randomBits.at(randomBitCount))+addX,getY(randomBits.at(randomBitCount))+addY,getXSpeed(randomBits.at(randomBitCount)),getYSpeed(randomBits.at(randomBitCount)),getSize(randomBits.at(randomBitCount)));
-			std::cout << "RandomBits: (" << getX(randomBits.at(randomBitCount))+addX  << "," << getY(randomBits.at(randomBitCount))+addY << ") Speed: (" << getXSpeed(randomBits.at(randomBitCount)) << "," << getYSpeed(randomBits.at(randomBitCount)) << ") Size: " << getSize(randomBits.at(randomBitCount)) << std::endl;
 			m_particals.push_back(tempPartical);
 			randomBitCount++;
 			i++;
@@ -49,7 +47,7 @@ ParticalRandomGenerator::ParticalRandomGenerator(std::string inPassword,std::str
 	updateParticals(200);
 }
 
-double ParticalRandomGenerator::getRandomChar()
+char ParticalRandomGenerator::getRandomChar()
 {
 	double  returnChar;
 	if(blockCountdown>blocks)
@@ -65,7 +63,15 @@ double ParticalRandomGenerator::getRandomChar()
 	{
 		updateParticals(200);
 	}
-	return returnChar;
+	for(int i=0;i<=20;i++)
+	{
+		returnChar *=10;
+		returnChar = returnChar - floor(returnChar);
+	}
+	returnChar=floor(returnChar*255);
+	char temp = returnChar;
+
+	return temp;
 }
 
 ParticalRandomGenerator::~ParticalRandomGenerator()
