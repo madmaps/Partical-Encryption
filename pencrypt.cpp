@@ -8,7 +8,7 @@ int main()
 {
 	ParticalRandomGenerator randGen("pasword","L4Jld2fis4IEls");
 	char temp ;
-	for(int i = 0; i<=1000;i++)
+	for(int i = 0; i<=10000;i++)
 	{
 		temp = randGen.getRandomChar();
 		cout << temp;

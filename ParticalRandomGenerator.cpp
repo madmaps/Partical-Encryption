@@ -47,7 +47,7 @@ ParticalRandomGenerator::ParticalRandomGenerator(std::string inPassword,std::str
 	updateParticals(200);
 }
 
-char ParticalRandomGenerator::getRandomChar()
+unsigned char ParticalRandomGenerator::getRandomChar()
 {
 	double  returnChar;
 	if(blockCountdown>blocks)
@@ -69,7 +69,7 @@ char ParticalRandomGenerator::getRandomChar()
 		returnChar = returnChar - floor(returnChar);
 	}
 	returnChar=floor(returnChar*255);
-	char temp = returnChar;
+	unsigned char temp = returnChar;
 
 	return temp;
 }
