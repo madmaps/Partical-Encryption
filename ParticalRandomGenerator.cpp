@@ -49,11 +49,8 @@ ParticalRandomGenerator::ParticalRandomGenerator(std::string inPassword,std::str
 double ParticalRandomGenerator::getRandomChar()
 {
 	double  returnChar;
-	int index =(blockCountdown/2)-1;
-	//std::cout << "Index: " << index << std::endl;
 	if(blockCountdown>blocks)
 	{
-		std::cout << blockCountdown-blocks-1;
 		returnChar = m_particals.at(blockCountdown-blocks-1)->getX();
 	}
 	else
