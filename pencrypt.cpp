@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-	ParticalRandomGenerator randGen("password","L3Jld2fis4IEls");
+	ParticalRandomGenerator randGen("password","L4Jld2fis4IEls");
 	for(int i = 0; i<=32;i++)
 	{
 		cout << randGen.getRandomChar() << endl;

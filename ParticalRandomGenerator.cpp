@@ -7,6 +7,7 @@ ParticalRandomGenerator::ParticalRandomGenerator(std::string inPassword,std::str
 	password = inPassword;
 	randomBits = inRandomBits;
 	unsigned int totalLength  = (inPassword.length())+(inRandomBits.length());
+	volMulti = 160;
 	rows = ceil(sqrt(totalLength));
 	blocks = pow(ceil(sqrt(totalLength)),2);
 	volume = rows*volMulti;
@@ -21,6 +22,7 @@ ParticalRandomGenerator::ParticalRandomGenerator(std::string inPassword,std::str
 			addY = floor(i/rows)*volMulti;
 			addX = (i%rows)*volMulti;
 			tempPartical = new Particals(getX(password.at(passwordCount))+addX,getY(password.at(passwordCount))+addY,getXSpeed(password.at(passwordCount)),getYSpeed(password.at(passwordCount)),getSize(password.at(passwordCount)));
+			std::cout << "Password: (" << getX(password.at(passwordCount))+addX << "," << getY(password.at(passwordCount))+addY << ")  Speed:  (" << getXSpeed(password.at(passwordCount)) << "," << getYSpeed(password.at(passwordCount)) << ") Size: " << getSize(password.at(passwordCount)) << std::endl;
 			m_particals.push_back(tempPartical);
 			passwordCount++;
 			i++;
@@ -30,6 +32,7 @@ ParticalRandomGenerator::ParticalRandomGenerator(std::string inPassword,std::str
 			addY = floor(i/rows)*volMulti;
 			addX = (i%rows)*volMulti;
 			tempPartical = new Particals(getX(randomBits.at(randomBitCount))+addX,getY(randomBits.at(randomBitCount))+addY,getXSpeed(randomBits.at(randomBitCount)),getYSpeed(randomBits.at(randomBitCount)),getSize(randomBits.at(randomBitCount)));
+			std::cout << "RandomBits: (" << getX(randomBits.at(randomBitCount))+addX  << "," << getY(randomBits.at(randomBitCount))+addY << ") Speed: (" << getXSpeed(randomBits.at(randomBitCount)) << "," << getYSpeed(randomBits.at(randomBitCount)) << ") Size: " << getSize(randomBits.at(randomBitCount)) << std::endl;
 			m_particals.push_back(tempPartical);
 			randomBitCount++;
 			i++;
@@ -91,7 +94,7 @@ int ParticalRandomGenerator::getYSpeed(const char inChar)const
 
 int ParticalRandomGenerator::getSize(const char inChar)const
 {
-	return 1;//(inChar%3)*1;
+	return 1+(inChar%3)*1;
 }
 
 double ParticalRandomGenerator::calculateXForce(const unsigned int& current) const
