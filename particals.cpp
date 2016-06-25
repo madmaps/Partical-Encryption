@@ -1,7 +1,7 @@
 #include "particals.h"
 #include <math.h>
 
-double Particals::gravityForce = 10;
+double Particals::gravityForce = 1;
 double Particals::massDiameterRatio = 1;
 int Particals::volume = 100;
 
@@ -67,21 +67,21 @@ void Particals::updateLocation()
     locationX+=speedX;
 	locationY+=speedY;
 
-    if(locationX>dblVolume)
+    if(locationX>dblVolume && speedX>0)
     {
         speedX=-speedX;
     }
-    if(locationX<0)
+    if(locationX<0 && speedX<0)
     {
         speedX=-speedX;
     }
 
 
-    if(locationY>dblVolume)
+    if(locationY>dblVolume && speedY>0)
     {
         speedY=-speedY;
     }
-    if(locationY<0)
+    if(locationY<0 && speedY<0)
     {
         speedY=-speedY;
     }

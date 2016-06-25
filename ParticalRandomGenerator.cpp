@@ -9,38 +9,38 @@ ParticalRandomGenerator::ParticalRandomGenerator(std::string inPassword,std::str
 	unsigned int totalLength  = (inPassword.length())+(inRandomBits.length());
 	rows = ceil(sqrt(totalLength));
 	blocks = pow(ceil(sqrt(totalLength)),2);
-	volume = ceil(sqrt(totalLength))*16;
-	std::cout << "Total Length: " << totalLength << std::endl;
-	std::cout << "Rows: " << rows << " Blocks: " << blocks << " Volume: " << volume << std::endl;
+	volume = rows*volMulti;
 	Particals::setVolume(volume);
 	unsigned int passwordCount=0,randomBitCount=0;
 	Particals* tempPartical ;
 	int addX=0, addY=0;
-	for(unsigned int i = 0;i < blocks;i++)
+	for(unsigned int i = 0;i<=totalLength-1;)
 	{
-		if(passwordCount<password.length())
+		if(passwordCount<=password.length()-1)
 		{
-			addY = floor(i/rows)*16;
-			addX = (i%rows)*16;
+			addY = floor(i/rows)*volMulti;
+			addX = (i%rows)*volMulti;
 			tempPartical = new Particals(getX(password.at(passwordCount))+addX,getY(password.at(passwordCount))+addY,getXSpeed(password.at(passwordCount)),getYSpeed(password.at(passwordCount)),getSize(password.at(passwordCount)));
 			m_particals.push_back(tempPartical);
 			passwordCount++;
+			i++;
 		}
-		if(randomBitCount<randomBits.length())
+		if(randomBitCount<=randomBits.length()-1)
 		{
-			addY = floor(i/rows)*16;
-			addX = (i%rows)*16;
+			addY = floor(i/rows)*volMulti;
+			addX = (i%rows)*volMulti;
 			tempPartical = new Particals(getX(randomBits.at(randomBitCount))+addX,getY(randomBits.at(randomBitCount))+addY,getXSpeed(randomBits.at(randomBitCount)),getYSpeed(randomBits.at(randomBitCount)),getSize(randomBits.at(randomBitCount)));
 			m_particals.push_back(tempPartical);
 			randomBitCount++;
+			i++;
 		}
 	}
 	int restOf = blocks-(randomBits.length()+password.length());
 	for(unsigned int i = blocks-restOf;i<blocks;i++)
 	{
-		addY = floor(i/rows)*16;
-		addX = (i%rows)*16;
-		tempPartical = new Particals(addX+8,addY+8,0,0,1);
+		addY = floor(i/rows)*volMulti;
+		addX = (i%rows)*volMulti;
+		tempPartical = new Particals(addX,addY,0,0,1);
 		m_particals.push_back(tempPartical);
 	}
 	updateParticals(200);
@@ -55,7 +55,7 @@ double ParticalRandomGenerator::getRandomChar()
 	}
 	else
 	{
-		returnChar =m_particals.at(blockCountdown-1)->getY();
+		returnChar = m_particals.at(blockCountdown-1)->getY();
 	}
 	blockCountdown--;
 	if(blockCountdown<=0)
@@ -71,12 +71,12 @@ ParticalRandomGenerator::~ParticalRandomGenerator()
 
 int ParticalRandomGenerator::getX(const char inChar)const
 {
-	return (int)inChar%16;
+	return (volMulti/16)*((int)inChar%16);
 }
 
 int ParticalRandomGenerator::getY(const char inChar)const
 {
-	return floor((int)inChar/16);
+	return (volMulti/16)*floor((int)inChar/16);
 }
 
 int ParticalRandomGenerator::getXSpeed(const char inChar)const
@@ -91,7 +91,7 @@ int ParticalRandomGenerator::getYSpeed(const char inChar)const
 
 int ParticalRandomGenerator::getSize(const char inChar)const
 {
-	return (inChar%10)*5;
+	return 1;//(inChar%3)*1;
 }
 
 double ParticalRandomGenerator::calculateXForce(const unsigned int& current) const

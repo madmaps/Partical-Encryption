@@ -5,10 +5,12 @@ using namespace std;
 
 int main()
 {
-	ParticalRandomGenerator randGen("pass","randy");
-	for(int i = 0; i<=20;i++)
+	ParticalRandomGenerator randGen("password","L3Jld2fis4IEls");
+	for(int i = 0; i<=32;i++)
 	{
 		cout << randGen.getRandomChar() << endl;
+		//cout << i << endl;
+		randGen.getRandomChar();
 	}
 	return 0;
 }
