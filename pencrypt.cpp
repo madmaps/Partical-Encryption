@@ -129,8 +129,6 @@ int main(int argc, char* argv[])
 	{
 		inFile.read(temp,1);
 		numOfBytes = (unsigned int)temp[0] & 0xFF;
-		cout << numOfBytes << endl;
-
 		for(unsigned int i = 0;i<numOfBytes;i++)
 		{
 			inFile.read(temp,1);

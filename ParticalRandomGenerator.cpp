@@ -61,7 +61,7 @@ unsigned char ParticalRandomGenerator::getRandomChar()
 	blockCountdown--;
 	if(blockCountdown<=0)
 	{
-		updateParticals(200);
+		updateParticals(20);
 	}
 	for(int i=0;i<=20;i++)
 	{
