@@ -100,12 +100,15 @@ int main(int argc, char* argv[])
 	{
 		cout << "Enter password: " << endl;
 		cin >> password;
-		cout << "Re-Enter password: " << endl;
-		cin >> password2;
-		if(password!=password2)
+		if(!decrypt)
 		{
-			cout << "Passwords don't match" << endl;
-			return 0;
+			cout << "Re-Enter password: " << endl;
+			cin >> password2;
+			if(password!=password2)
+			{
+				cout << "Passwords don't match" << endl;
+				return 0;
+			}
 		}
 	}
 	
