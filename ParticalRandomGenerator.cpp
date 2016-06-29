@@ -65,10 +65,10 @@ unsigned char ParticalRandomGenerator::getRandomChar()
 	}
 	for(int i=0;i<=20;i++)
 	{
-		returnChar *=10;
+		returnChar *= 10;
 		returnChar = returnChar - floor(returnChar);
 	}
-	returnChar=floor(returnChar*255);
+	returnChar=floor(returnChar*256);
 	unsigned char temp = returnChar;
 
 	return temp;
