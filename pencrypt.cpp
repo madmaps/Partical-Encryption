@@ -60,6 +60,7 @@ int main(int argc, char* argv[])
 					return 0;
 				}
 				passwordCount++;
+				numOfPasswords=passwordCount;
 				i++;
 				break;
 			case 'i':
