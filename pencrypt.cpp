@@ -2,6 +2,7 @@
 #include <string>
 #include <math.h>
 #include <fstream>
+#include <vector>
 #include "ParticalRandomGenerator.h"
 #include <random>
 
@@ -9,7 +10,9 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	string password,password2;
+	vector<string> password;
+	vector<string> password2;
+	string tempPassword;
 	bool usingOutFile=false;
 	bool askPassword = true;
 	bool decrypt = false;
@@ -17,12 +20,13 @@ int main(int argc, char* argv[])
 	ifstream inFile;
 	streampos size;
 	unsigned int numOfBytes=32;
+	unsigned int numOfPasswords=1;
 	std::vector<string> Args;
 	for(int i = 0 ;i < argc;i++)
 	{
 		Args.push_back(argv[i]);
 	}
-	
+	unsigned int passwordCount = 0;
 	for(int i = 1;i<argc-1;i++)
 	{
 		if(Args[i].at(0)=='-')
@@ -49,12 +53,13 @@ int main(int argc, char* argv[])
 				break;
 			case 'p':
 				askPassword = false;
-				password = Args[i+1];
-				if(password.length()<5)
+				password.push_back(Args[i+1]);
+				if(password[passwordCount].length()<5)
 				{
 					cout << "Password is too short" << endl;
 					return 0;
 				}
+				passwordCount++;
 				i++;
 				break;
 			case 'i':
@@ -74,6 +79,15 @@ int main(int argc, char* argv[])
 				if(numOfBytes<8 || numOfBytes > 255)
 				{
 					cout << "Invalid number of random bytes" << endl;
+					return 0;
+				}
+				i++;
+				break;
+			case 'm':
+				numOfPasswords = atoi(Args[i+1].c_str());
+				if(numOfPasswords < 1)
+				{
+					cout << "Invalid number of passwords" << endl;
 					return 0;
 				}
 				i++;
@@ -98,16 +112,20 @@ int main(int argc, char* argv[])
 	}
 	if(askPassword)
 	{
-		cout << "Enter password: " << endl;
-		cin >> password;
-		if(!decrypt)
+		for(unsigned int i = 0;i < numOfPasswords;i++)
 		{
-			cout << "Re-Enter password: " << endl;
-			cin >> password2;
-			if(password!=password2)
+			cout << "Enter password[" << i << "]: " << endl;
+			cin >> tempPassword;
+			password.push_back(tempPassword);
+			if(!decrypt)
 			{
-				cout << "Passwords don't match" << endl;
-				return 0;
+				cout << "Re-Enter password: " << endl;
+				cin >> tempPassword;
+				if(password[i]!=tempPassword)
+				{
+					cout << "Passwords don't match" << endl;
+					return 0;
+				}
 			}
 		}
 	}
@@ -140,12 +158,20 @@ int main(int argc, char* argv[])
 		size-=numOfBytes+1;
 
 	} 
-	ParticalRandomGenerator randGen(password,randomBits);
+	ParticalRandomGenerator* randGen[numOfPasswords+1];
+	for(unsigned int i = 0;i < numOfPasswords;i++)
+	{
+		randGen[i] = new ParticalRandomGenerator(password[i],randomBits);
+	}
 	char inFromFile[1];
 	for(int i = 0; i<size;i++)
 	{
 		inFile.read(inFromFile,1);
-		temp[0] = randGen.getRandomChar();
+		temp[0]=0;
+		for(unsigned int j = 0;j < numOfPasswords;j++)
+		{
+			temp[0] = temp[0] ^ randGen[j]->getRandomChar();
+		}
 		temp[0] = temp[0] ^ inFromFile[0];
 		if(usingOutFile)
 		{
