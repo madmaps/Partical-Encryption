@@ -15,6 +15,7 @@ ParticalRandomGenerator::ParticalRandomGenerator(std::string inPassword,std::str
 	unsigned int passwordCount=0,randomBitCount=0;
 	Particals* tempPartical ;
 	int addX=0, addY=0;
+	cycleCount = 0;
 	for(unsigned int i = 0;i<=totalLength-1;)
 	{
 		if(passwordCount<=password.length()-1)
@@ -61,7 +62,11 @@ unsigned char ParticalRandomGenerator::getRandomChar()
 	blockCountdown--;
 	if(blockCountdown<=0)
 	{
-		updateParticals(1);
+		if(cycleCount>password.length())
+		{
+			cycleCount=0;
+		}
+		updateParticals(getCycles(password.at(cycleCount)));
 	}
 	for(int i=0;i<=20;i++)
 	{
@@ -101,6 +106,11 @@ int ParticalRandomGenerator::getYSpeed(const char inChar)const
 int ParticalRandomGenerator::getSize(const char inChar)const
 {
 	return 1+(inChar%3)*1;
+}
+
+int ParticalRandomGenerator::getCycles(const char inChar)const
+{
+	return 1+((int)inChar%6);
 }
 
 double ParticalRandomGenerator::calculateXForce(const unsigned int& current) const

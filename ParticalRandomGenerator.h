@@ -22,6 +22,7 @@ private:
 	unsigned int blocks;
 	std::vector<Particals*> m_particals;
 	unsigned int blockCountdown;
+	unsigned int cycleCount;
 	
 	void updateParticals(const unsigned int inFrames);
 	int getX(const char inChar)const;
@@ -29,6 +30,7 @@ private:
 	int getXSpeed(const char inChar)const;
 	int getYSpeed(const char inChar)const;
 	int getSize(const char inChar)const;
+	int getCycles(const char inChar)const;
 	double calculateXForce(const unsigned int& current) const;
 	double calculateYForce(const unsigned int& current) const;
 
